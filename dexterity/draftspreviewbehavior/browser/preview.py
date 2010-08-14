@@ -14,6 +14,7 @@ from plone.autoform.interfaces import IFormFieldProvider
 from plone.autoform.view import WidgetsView
 
 from plone.dexterity.interfaces import IDexterityFTI
+from plone.dexterity.interfaces import IAddBegunEvent, IEditBegunEvent
 from plone.dexterity.utils import resolveDottedName
 from plone.dexterity.i18n import MessageFactory as _
 
@@ -23,9 +24,8 @@ from Products.statusmessages.interfaces import IStatusMessage
 
 from plone.app.drafts.archetypes import discardDraftsOnCancel
 
-from plone.app.drafts.interfaces import IDefaultPreview
-from plone.app.drafts.interfaces import IDexterityDraftAdding
-from plone.app.drafts.interfaces import IDexterityDraftEditing
+from dexterity.draftspreviewbehavior.interfaces import IDefaultPreview
+
 
 class NotFound(object):
     """
@@ -84,8 +84,11 @@ class DefaultPreviewView(WidgetsView):
             #       the render method SHOULD BE IMPLEMENTED by custom 'preview' view
             return view()
         
+        from plone.autoform.interfaces import IWidgetsView
         view = zope.component.queryMultiAdapter( (self.context, self.request), name='view' )
-        if view is not None and not IDefaultPreview.providedBy(view): #Don't want recursion loop
+        # Bad Hack...  think of other way to do this
+        # Make sure we don't use the default autoplone view here; only want custom ones
+        if view is not None and view.__module__ != 'Products.Five.metaclass': 
             view.buttons = self.buttons
             view.actions = self.actions
             return view()
@@ -137,24 +140,23 @@ class DefaultPreviewView(WidgetsView):
         content = aq_inner( self.getContent() )
         container = aq_parent( aq_inner( content ) )
 
-        if IDexterityDraftAdding.providedBy( content ):
+        if IAddBegunEvent.providedBy( self.request ):
             view = '++add++%s' % content.portal_type
             path = '%s/%s' % (container.absolute_url_path(), view) 
             self.template = self.request.traverse( path )
-
-        elif IDexterityDraftEditing.providedBy( content ):
+        elif IEditBegunEvent.providedBy( self.request ):
             view = 'edit' 
             path = '%s/%s' % (container.absolute_url_path(), view) 
             self.template = self.request.traverse( path )
         else:
             return
             
-        # Need to provide form data to add/edit form in request
-        for name, widget in self.w.items(): 
-            attr = getattr( content, name, NotFound )
-            if attr is not NotFound:
-                widget_name = widget.name
-                self.template.request.form[widget_name] = attr
+##        # Need to provide form data to add/edit form in request
+##        for name, widget in self.w.items(): 
+##            attr = getattr( content, name, NotFound )
+##            if attr is not NotFound:
+##                widget_name = widget.name
+##                self.template.request.form[widget_name] = attr
 
     # Buttons
     @button.buttonAndHandler(_('Save'), name='save')
@@ -165,11 +167,11 @@ class DefaultPreviewView(WidgetsView):
     def handleEdit(self, action):
         content = self.getContent()
         container = aq_parent( aq_inner( content ) )
-        if content.id.startswith('++draftadd++'):
+        if IAddBegunEvent.providedBy( self.request ):
             view = '++add++%s' % content.portal_type
             redirect_url = '%s/%s' % (container.absolute_url(), view)
             self.request.response.redirect( redirect_url )
-        elif content.id.startswith('++draftedit++'):
+        elif IEditBegunEvent.providedBy( self.request ):
             view = 'edit'
             redirect_url = '%s/%s' % (container.absolute_url_path(), view)
             self.request.response.redirect( redirect_url )

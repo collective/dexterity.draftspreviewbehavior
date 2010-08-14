@@ -17,11 +17,32 @@
         <!--include package="plone.app.intid" /-->
         <include package=".browser" />
     
-        <!--adapter factory=".syncer.PopulateDraftFromContextSyncer" name="dexterity.draftspreviewbehavior.syncer" />
-        <adapter factory=".syncer.PopulateContentFromDraftSyncer" name="dexterity.draftspreviewbehavior.syncer" /-->
+        <!-- ++draft++ traverser -->
+        <adapter
+            name="draft"
+            factory=".traverser.DraftTraverser"
+        />
         
-        <!--adapter factory=".buttons.AddPreviewDraftButtonAndHandler"/>
-        <adapter factory=".buttons.EditPreviewDraftButtonAndHandler"/-->
+        <include package="plone.behavior" file="meta.zcml" />
+        <include package="plone.directives.form" file="meta.zcml" />
+        <plone:behavior
+            title="IDraftPreviewBehavior"
+            description="Marks object as IDraftPreviewBehavior to allow preview of drafts ('Preview' button)"
+            provides=".interfaces.IDraftPreviewBehavior"
+            marker=".interfaces.IDraftPreviewBehavior"
+            />
+
+        <!-- Add/Edit begun events -->
+        <subscriber
+        for="plone.dexterity.browser.add.DefaultAddForm
+             plone.dexterity.interfaces.IAddBegunEvent"
+        handler=".drafts.addBegun"
+        />
+        <subscriber
+        for="plone.dexterity.browser.edit.DefaultEditForm
+             plone.dexterity.interfaces.IEditBegunEvent"
+        handler=".drafts.editBegun"
+        />
         
     </configure>
 </configure>

@@ -28,15 +28,15 @@ from plone.dexterity.i18n import MessageFactory as _
 from plone.dexterity.interfaces import IDexterityContent
 from plone.dexterity.interfaces import IDexterityFTI
 
-from plone.app.drafts.interfaces import IDexterityDraft, IDraft, IDraftSyncer
+from plone.app.drafts.interfaces import IDraft, IDraftSyncer
 from plone.app.drafts.dexterity import discardDraftsOnCancel
 from plone.app.drafts.dexterity import beginDrafting
 from plone.app.drafts.utils import getCurrentDraft
  
 #from plone.app.dexterity.behaviors.drafts import _applyChanges
 
-from dexterity.draftspreviewbehavior.interfaces import IDexterityDraftPreviewBehavior
-from dexterity.draftspreviewbehavior.content import getDraftContext
+from dexterity.draftspreviewbehavior.interfaces import IDraftPreviewBehavior
+#from dexterity.draftspreviewbehavior.content import getDraftContext
 
 ################################################################################
 
@@ -48,10 +48,10 @@ def _applyChanges( form, content, data ):
 ################################################################################
 
 class AddPreviewDraftButtonAndHandler(ButtonAndHandler):
-    zope.interface.implements( IDexterityDraftPreviewBehavior )
+    zope.interface.implements( IDraftPreviewBehavior )
     zope.component.adapts( interfaces.IAddForm,
                            zope.interface.Interface,
-                           IDexterityDraft)
+                           IDraft)
     
     @button.buttonAndHandler(_(u'Preview'), name='preview')
     def buttonHandler(self, action):
@@ -81,29 +81,38 @@ class AddPreviewDraftButtonAndHandler(ButtonAndHandler):
     
 
 class EditPreviewDraftButtonAndHandler(ButtonAndHandler):
-    zope.interface.implements( IDexterityDraftPreviewBehavior )
+    zope.interface.implements( IDraftPreviewBehavior )
     zope.component.adapts( interfaces.IEditForm,
                            zope.interface.Interface,
-                           IDexterityDraft)
+                           IDraft)
     
     @button.buttonAndHandler(_(u'Preview'), name='preview')
     def buttonHandler(self, action):
-        #content = self.getContent()
-        content = getDraftContext(self.context, self.request, self.portal_type, 'edit')
+##        #content = self.getContent()
+##        content = getDraftContext(self.context, self.request, self.portal_type, 'edit')
+##        data, errors = self.extractData()
+##        _applyChanges(self, content, data)
+##        
+##        if errors:
+##            self.status = self.formErrorsMessage
+##            return
+##
+##        view = '%s/@@preview' % content.id
+##        redirect_url = "%s/%s" % (aq_parent( aq_inner(content) ).absolute_url(), view)
+##        
+##        # Store current request URL on draft so preview know how to come back
+##        content._returnURL = self.request.getURL()
+##        self.request.response.redirect( redirect_url ) 
+
         data, errors = self.extractData()
-        _applyChanges(self, content, data)
-        
         if errors:
             self.status = self.formErrorsMessage
             return
 
-        view = '%s/@@preview' % content.id
-        redirect_url = "%s/%s" % (aq_parent( aq_inner(content) ).absolute_url(), view)
-        
-        # Store current request URL on draft so preview know how to come back
-        content._returnURL = self.request.getURL()
+        view = '++draft++%s' % self.portal_type
+        redirect_url = "%s/%s" % ( self.getContent().absolute_url(), view )
         self.request.response.redirect( redirect_url ) 
-
+        
     def updateActions(self):
         self.form.actions["preview"].addClass("standalone")
     

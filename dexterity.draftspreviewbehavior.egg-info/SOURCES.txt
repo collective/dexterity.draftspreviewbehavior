@@ -11,9 +11,15 @@ dexterity.draftspreviewbehavior.egg-info/not-zip-safe
 dexterity.draftspreviewbehavior.egg-info/requires.txt
 dexterity.draftspreviewbehavior.egg-info/top_level.txt
 dexterity/draftspreviewbehavior/__init__.py
-dexterity/draftspreviewbehavior/content.py
-dexterity/draftspreviewbehavior/overrides.py
+dexterity/draftspreviewbehavior/buttons.py
+dexterity/draftspreviewbehavior/configure.zcml
+dexterity/draftspreviewbehavior/drafts.py
+dexterity/draftspreviewbehavior/interfaces.py
+dexterity/draftspreviewbehavior/traverser.py
 dexterity/draftspreviewbehavior/browser/__init__.py
+dexterity/draftspreviewbehavior/browser/configure.zcml
+dexterity/draftspreviewbehavior/browser/container.pt
+dexterity/draftspreviewbehavior/browser/item.pt
 dexterity/draftspreviewbehavior/browser/preview.py
 docs/HISTORY.txt
 docs/INSTALL.txt

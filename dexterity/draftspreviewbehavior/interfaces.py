@@ -13,7 +13,7 @@ from plone.z3cform.interfaces import IButtonAndHandler
 """Custom Behavior Button Marker Interfaces
 """
 
-class IDexterityDraftPreviewBehavior(IButtonAndHandler):
+class IDraftPreviewBehavior(IButtonAndHandler):
     """Marker interfac to enable custom preview button and handler override
     This is set by an opt-in behavior statement
     """
@@ -21,22 +21,6 @@ class IDexterityDraftPreviewBehavior(IButtonAndHandler):
 """Dexterity preview drafts related interfaces
 """
 
-class IDexterityDraftItem(zope.interface.Interface):
-    """
-    """
-
-class IDexterityDraftContainer(zope.interface.Interface):
-    """
-    """
-
-class IDexterityDraftAdding(zope.interface.Interface):
-    """
-    """
-    
-class IDexterityDraftEditing(zope.interface.Interface):
-    """
-    """
-    
 class IDefaultPreview(zope.interface.Interface):
     """
     """
