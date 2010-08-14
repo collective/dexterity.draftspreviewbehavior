@@ -1,0 +1,88 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:monkey="http://namespaces.plone.org/monkey">
+
+    <include package="collective.monkeypatcher" />
+    
+    <!-- Patch dexteritys ++add++ traverser.
+         XXX: This should be removed when Plone moves to CMF 2.2
+    -->
+    <!--configure 
+        package="dexterity.draftspreviewbehavior"
+        zcml:condition="not-installed Products.CMFCore.namespace">
+
+        <monkey:patch
+            class="plone.app.dexterity.overrides.AddViewTraverser"
+            original="traverse"
+            replacement=".overrides.AddViewTraverser_traverse"
+            />
+    </configure-->
+
+    <!-- Patch Products.CMFCore.namespace ++add++ traverser.
+         XXX: Adapeter should just be overridden when Plone moves
+              to CMF 2.2
+    -->
+    <configure 
+        package="dexterity.draftspreviewbehavior"
+        zcml:condition="installed Products.CMFCore.namespace">
+    
+        <monkey:patch
+            class="Products.CMFCore.namespace.AddViewTraverser"
+            original="traverse"
+            replacement=".overrides.AddViewTraverser_traverse"
+            />
+    </configure>
+
+    <!-- allow ignoreContext=False on IDexterityDraft objects -->
+    <!--monkey:patch
+        class="plone.dexterity.browser.add.DefaultAddForm"
+        original="__init__"
+        replacement=".overrides.DefaultAddForm__init__"
+        /-->
+
+    <!-- @@preview traverser -->
+    <!-- Add for... 
+        for="plone.dexterity.browser.add.DefaultAddView"
+        for="plone.dexterity.browser.edit.DefaultEditView"
+    -->
+    <!--adapter
+        for="plone.dexterity.browser.add.DefaultAddView
+             zope.interface.Interface"
+        name="preview"
+        factory=".overrides.PreviewTraverser"
+        /-->
+
+    <!--browser:page
+        name="preview"
+        for="plone.dexterity.browser.add.DefaultAddView"
+        class=".overrides.PreviewTraverser"
+        permission="cmf.ModifyPortalContent"
+        /-->
+
+    <!-- ++draft++ traverser -->
+    <adapter
+        name="draft"
+        factory=".overrides.DraftTraverser"
+        />
+
+    <!-- ++draftadd++ traverser -->
+    <!--adapter
+        name="draftadd"
+        factory=".overrides.DraftTraverser"
+        /-->
+
+    <!-- ++draftedit++ traverser -->
+    <!--adapter
+        name="draftedit"
+        factory=".overrides.DraftTraverser"
+        /-->
+
+    <!-- intercept @@edit tranverser -->
+    <!--adapter
+        name="view"
+        factory=".overrides.EditViewTraverser"
+        /-->
+
+</configure>

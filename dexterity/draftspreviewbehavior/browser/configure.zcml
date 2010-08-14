@@ -1,0 +1,67 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="plone.dexterity">
+  
+    <!--
+    
+        for="plone.dexterity.interfaces.IDexterityItem"
+        for="plone.dexterity.browser.add.DefaultAddView"
+    -->
+    
+    <!-- Standard preview view for IDexterityDraft content types -->
+    <browser:page
+        for="plone.dexterity.interfaces.IDexterityItem"
+        name="preview"
+        class=".preview.DefaultPreviewView"
+        template="item.pt"
+        permission="zope2.View"
+        />
+    <browser:page
+        for="plone.dexterity.interfaces.IDexterityContainer"
+        name="preview"
+        class=".preview.DefaultPreviewView"
+        template="container.pt"
+        permission="zope2.View"
+        />
+ 
+    <!--browser:page
+        for="dexterity.draftspreviewbehavior.interfaces.IDexterityDraftItem"
+        name="preview"
+        class=".preview.DefaultPreviewView"
+        template="item.pt"
+        permission="zope2.View"
+        />
+        
+    <browser:page
+        for="dexterity.draftspreviewbehavior.interfaces.IDexterityDraftContainer"
+        name="preview"
+        class=".preview.DefaultPreviewView"
+        template="container.pt"
+        permission="zope2.View"
+        /-->
+     
+    <class class=".preview.DefaultPreviewView">
+        <require
+            permission="cmf.ModifyPortalContent"
+            interface="zope.publisher.interfaces.browser.IBrowserPage"
+            />
+    </class>
+
+    <!-- Standard view view for IDexterityDraft content types -->
+    <!--browser:page
+        for="plone.dexterity.browser.add.DefaultAddView"
+        name="view"
+        class=".preview.DefaultPreviewView"
+        template="item.pt"
+        permission="zope2.View"
+        />
+    
+    <browser:page
+        for="plone.dexterity.browser.edit.DefaultEditView"
+        name="view"
+        class=".preview.DefaultPreviewView"
+        permission="zope2.View"
+        /-->
+ 
+</configure>

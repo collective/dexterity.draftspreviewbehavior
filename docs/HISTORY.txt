@@ -1,0 +1,23 @@
+Changelog
+=========
+
+0.2dev (unreleased)
+---------------------
+- Initial release
+
+0.3dev (unreleased)
+---------------------
+- Package cleanup
+
+0.4dev (unreleased)
+---------------------
+- First Test (un)Release 
+
+0.5dev (unreleased)
+---------------------
+- allow preview cancel button to execute original cancel button handler code
+- reworked button code not to overwrite custom buttons
+- ++add/edit_draft++ view now always shows preview view by default if another 
+  view is not specified (IE: @@custom_view)
+- added a zcml:condition installed plone.app.drafts since it wont work without 
+  it and may not get installed unless checked out
