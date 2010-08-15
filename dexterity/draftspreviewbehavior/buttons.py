@@ -20,7 +20,8 @@ import z3c.form.form
 from z3c.form import button, interfaces
 from z3c.form.interfaces import IAddForm
 
-from plone.z3cform.buttons import ButtonAndHandler, CustomButtonsAndHandlers
+#from plone.z3cform.buttons import ButtonAndHandler, CustomButtonsAndHandlers
+from plone.z3cform.buttons import ButtonAndHandler
 
 from plone.namedfile.interfaces import INamedField
 
@@ -49,10 +50,13 @@ def _applyChanges( form, content, data ):
 
 class AddPreviewDraftButtonAndHandler(ButtonAndHandler):
     zope.interface.implements( IDraftPreviewBehavior )
-    zope.component.adapts( interfaces.IAddForm,
-                           zope.interface.Interface,
-                           IDraft)
     
+    def __init__( self, form, event ):
+        super(AddPreviewDraftButtonAndHandler,self).__init__(form,event)
+        fti = zope.component.queryUtility( IDexterityFTI, name=form.portal_type )
+        if 'dexterity.draftspreviewbehavior.IDraftPreviewBehavior' in fti.behaviors:
+            form.buttonsandhandlers[ IDraftPreviewBehavior ] = self
+ 
     @button.buttonAndHandler(_(u'Preview'), name='preview')
     def buttonHandler(self, action):
         
@@ -86,6 +90,13 @@ class EditPreviewDraftButtonAndHandler(ButtonAndHandler):
                            zope.interface.Interface,
                            IDraft)
     
+    def __init__( self, form, event ):
+        super(EditPreviewDraftButtonAndHandler,self).__init__(form,event)
+        fti = zope.component.queryUtility( IDexterityFTI, name=form.portal_type )
+        if 'dexterity.draftspreviewbehavior.IDraftPreviewBehavior' in fti.behaviors:
+            #zope.interface.alsoProvides( form.request, IDraftPreviewBehavior )
+            form.buttonsandhandlers[ IDraftPreviewBehavior ] = self
+ 
     @button.buttonAndHandler(_(u'Preview'), name='preview')
     def buttonHandler(self, action):
 ##        #content = self.getContent()

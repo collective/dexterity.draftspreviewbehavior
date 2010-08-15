@@ -6,10 +6,7 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:grok="http://namespaces.zope.org/grok"
     i18n_domain="dexterity.draftspreviewbehavior">
-    
-    <adapter factory=".buttons.AddPreviewDraftButtonAndHandler"/>
-    <adapter factory=".buttons.EditPreviewDraftButtonAndHandler"/>
-    
+   
     <configure 
         package="dexterity.draftspreviewbehavior"
         zcml:condition="installed plone.app.drafts">
@@ -32,17 +29,19 @@
             marker=".interfaces.IDraftPreviewBehavior"
             />
 
-        <!-- Add/Edit begun events -->
+        <!-- Draft DefaultAddForm button & handler overrides -->
         <subscriber
         for="plone.dexterity.browser.add.DefaultAddForm
-             plone.dexterity.interfaces.IAddBegunEvent"
-        handler=".drafts.addBegun"
-        />
-        <subscriber
-        for="plone.dexterity.browser.edit.DefaultEditForm
-             plone.dexterity.interfaces.IEditBegunEvent"
-        handler=".drafts.editBegun"
+             plone.z3cform.buttons.IButtonOverrideEvent"
+        handler=".buttons.AddPreviewDraftButtonAndHandler"
         />
         
+        <!-- Draft DefaultEditForm button & handler overrides -->
+        <subscriber
+        for="plone.dexterity.browser.edit.DefaultEditForm
+             plone.z3cform.buttons.IButtonOverrideEvent"
+        handler=".buttons.EditPreviewDraftButtonAndHandler"
+        />
+ 
     </configure>
 </configure>

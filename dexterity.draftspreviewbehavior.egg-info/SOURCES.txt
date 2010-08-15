@@ -13,7 +13,6 @@ dexterity.draftspreviewbehavior.egg-info/top_level.txt
 dexterity/draftspreviewbehavior/__init__.py
 dexterity/draftspreviewbehavior/buttons.py
 dexterity/draftspreviewbehavior/configure.zcml
-dexterity/draftspreviewbehavior/drafts.py
 dexterity/draftspreviewbehavior/interfaces.py
 dexterity/draftspreviewbehavior/traverser.py
 dexterity/draftspreviewbehavior/browser/__init__.py
