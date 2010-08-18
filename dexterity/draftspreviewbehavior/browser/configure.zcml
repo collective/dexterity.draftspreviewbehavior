@@ -10,7 +10,7 @@
     -->
     
     <!-- Standard preview view for IDexterityDraft content types -->
-    <browser:page
+    <!--browser:page
         for="plone.dexterity.interfaces.IDexterityItem"
         name="preview"
         class=".preview.DefaultPreviewView"
@@ -23,45 +23,26 @@
         class=".preview.DefaultPreviewView"
         template="container.pt"
         permission="zope2.View"
-        />
- 
-    <!--browser:page
-        for="dexterity.draftspreviewbehavior.interfaces.IDexterityDraftItem"
-        name="preview"
-        class=".preview.DefaultPreviewView"
-        template="item.pt"
-        permission="zope2.View"
-        />
-        
-    <browser:page
-        for="dexterity.draftspreviewbehavior.interfaces.IDexterityDraftContainer"
-        name="preview"
-        class=".preview.DefaultPreviewView"
-        template="container.pt"
-        permission="zope2.View"
         /-->
-     
-    <class class=".preview.DefaultPreviewView">
+ 
+    <!--class class=".preview.DefaultPreviewView">
         <require
             permission="cmf.ModifyPortalContent"
             interface="zope.publisher.interfaces.browser.IBrowserPage"
             />
-    </class>
+    </class-->
 
-    <!-- Standard view view for IDexterityDraft content types -->
-    <!--browser:page
-        for="plone.dexterity.browser.add.DefaultAddView"
-        name="view"
-        class=".preview.DefaultPreviewView"
-        template="item.pt"
-        permission="zope2.View"
+    <!-- TODO
+         permission should be add/modify !!!
+
+        template="templates/buttons.pt"
+        class=".buttons.PreviewButtonsViewlet"
+    -->
+    <!-- viewlet for 'preview' action buttons (save/edit/cancel) -->
+    <browser:viewlet
+        name="preview.buttons"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
+        class=".jason.JasonPreviewView"
+        permission="cmf.ModifyPortalContent"
         />
-    
-    <browser:page
-        for="plone.dexterity.browser.edit.DefaultEditView"
-        name="view"
-        class=".preview.DefaultPreviewView"
-        permission="zope2.View"
-        /-->
- 
 </configure>

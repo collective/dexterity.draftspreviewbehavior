@@ -13,7 +13,8 @@
         
         <!--include package="plone.app.intid" /-->
         <include package=".browser" />
-    
+        <include file="profiles.zcml" />
+
         <!-- ++draft++ traverser -->
         <adapter
             name="draft"

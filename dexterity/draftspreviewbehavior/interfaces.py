@@ -14,14 +14,14 @@ from plone.z3cform.interfaces import IButtonAndHandler
 """
 
 class IDraftPreviewBehavior(IButtonAndHandler):
-    """Marker interfac to enable custom preview button and handler override
+    """Marker interface to enable custom preview button and handler override
     This is set by an opt-in behavior statement
     """
 
 """Dexterity preview drafts related interfaces
 """
 
-class IDefaultPreview(zope.interface.Interface):
-    """
+class IDraftPreview(zope.interface.Interface):
+    """Marker interface to indicate draft state content type objects
     """
     

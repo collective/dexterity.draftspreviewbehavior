@@ -16,12 +16,18 @@ from plone.app.drafts.interfaces import IDraft
 from Products.Five.browser import BrowserView
 from zope.publisher.interfaces import IPublishTraverse, NotFound
 
+from dexterity.draftspreviewbehavior.interfaces import IDraftPreview
+from plone.dexterity.i18n import MessageFactory as _
+from Products.statusmessages.interfaces import IStatusMessage
+
 class DraftTraverser(object):
     """Draft traverser.
     """
     adapts(IFolderish, Interface)
     implements(ITraversable)
 
+    previewMessage = _(u'This is a preview.  Click "Save" to publish, "Edit" to edit or "Cancel" to cancel and delete')
+    
     def __init__(self, context, request):
         self.context = context
         self.request = request
@@ -85,10 +91,13 @@ class DraftTraverser(object):
                 # TODO:  logic should go in here is custom content type
                 #        view exists; instead of default; then use view instead
                 #        if append ??
-                if len(self.request.path) == 0:
-                    stack = self.request['TraversalRequestNameStack']
-                    stack.append('preview')
-                    self.request._hacked_path = 1
+                #if len(self.request.path) == 0:
+                #    stack = self.request['TraversalRequestNameStack']
+                #    stack.append('preview')
+                #    self.request._hacked_path = 1
+                
+                IStatusMessage(self.request).addStatusMessage( self.previewMessage, "info")
+                zope.interface.alsoProvides( content, IDraftPreview )
                 return content
 #
         raise TraversalError(self.context, name)
