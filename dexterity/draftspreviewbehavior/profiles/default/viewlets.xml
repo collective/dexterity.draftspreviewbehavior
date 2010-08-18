@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object>
+  
+  <!-- Below the body of a document -->
+  <order manager="plone.belowcontentbody" skinname="Plone Default">
+    <viewlet name="preview.buttons" insert-before="*"/>
+  </order>
+
+</object>

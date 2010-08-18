@@ -5,6 +5,7 @@ from zope.interface import implements
 from zope.interface import Interface
 from zope.component import adapts
 from zope.traversing.interfaces import ITraversable
+from zope.traversing.interfaces import TraversalError
 
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
@@ -51,8 +52,27 @@ class DraftTraverser(object):
                 add_view.__name__ = ti.factory
             
                 form = add_view.form_instance
+                
+                
+                # Reset buttons and handlers since we don't want action
+                # buttons to be able to invoke them from here
+                #import z3c.form.button
+                #form.buttons = z3c.form.button.Buttons()
+                #form.handlers = z3c.form.button.Handlers()
             
+                #form.ignoreButtons = True
+                #form.ignoreHandlers = True
                 form.update() #Should automatically get draft data via notify
+                
+                # Popluate request.form with draft
+                #from plone.app.dexterity.behaviors.drafts import draftRequestForm
+                #draftRequestForm( form, None )
+                
+                # update form widgets
+                #form.updateWidgets()
+                #form.updateActions()
+                #form.actions.update()
+                
                 data, errors = form.extractData()
                 if errors:
                     # TODO: Put a message that can't preview; errors on page

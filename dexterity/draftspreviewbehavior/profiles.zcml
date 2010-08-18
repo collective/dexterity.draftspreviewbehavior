@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="dexterity.draftspreviewbehavior">
+
+  <genericsetup:registerProfile
+      name="default"
+      title="Dexterity Drafts Content Preview Behavior"
+      directory="profiles/default"
+      description='Extension profile for "Dexterity Drafts".'
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>
+

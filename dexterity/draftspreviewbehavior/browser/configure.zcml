@@ -37,12 +37,18 @@
 
         template="templates/buttons.pt"
         class=".buttons.PreviewButtonsViewlet"
+        
+        view="plone.app.layout.globals.interfaces.IViewView"
+        for="dexterity.draftspreviewbehavior.interfaces.IDraftPreview"
     -->
     <!-- viewlet for 'preview' action buttons (save/edit/cancel) -->
     <browser:viewlet
         name="preview.buttons"
         manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
-        class=".jason.JasonPreviewView"
+        view="plone.app.layout.globals.interfaces.IViewView"
+        for="dexterity.draftspreviewbehavior.interfaces.IDraftPreview"
+        class=".preview.PreviewViewButtons"
+        template="templates/buttons.pt"
         permission="cmf.ModifyPortalContent"
         />
 </configure>
