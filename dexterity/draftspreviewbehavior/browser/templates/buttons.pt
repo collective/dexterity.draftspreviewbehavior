@@ -1,5 +1,5 @@
 <div class="visualClear">
-    <form action="." method="post" tal:attributes="action view/request/getURL">
+    <form action="." method="post" tal:attributes="action view/formURL">
         <metal:actions metal:use-macro="context/@@ploneform-macros/actions"/>
     </form>
 </div>

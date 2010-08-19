@@ -13,13 +13,15 @@ dexterity.draftspreviewbehavior.egg-info/top_level.txt
 dexterity/draftspreviewbehavior/__init__.py
 dexterity/draftspreviewbehavior/buttons.py
 dexterity/draftspreviewbehavior/configure.zcml
+dexterity/draftspreviewbehavior/draftform.py
 dexterity/draftspreviewbehavior/interfaces.py
+dexterity/draftspreviewbehavior/profiles.zcml
 dexterity/draftspreviewbehavior/traverser.py
 dexterity/draftspreviewbehavior/browser/__init__.py
 dexterity/draftspreviewbehavior/browser/configure.zcml
-dexterity/draftspreviewbehavior/browser/container.pt
-dexterity/draftspreviewbehavior/browser/item.pt
 dexterity/draftspreviewbehavior/browser/preview.py
+dexterity/draftspreviewbehavior/browser/templates/buttons.pt
+dexterity/draftspreviewbehavior/profiles/default/viewlets.xml
 docs/HISTORY.txt
 docs/INSTALL.txt
 docs/LICENSE.GPL
