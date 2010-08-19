@@ -31,7 +31,7 @@ class PreviewViewButtons(Form):
     buttons = button.Buttons(IButtons)
     
     def __init__(self, context, request, view, manager):
-        super( PreviewViewButtons, self ).__init__(context, request)
+        super( PreviewViewButtons, self ).__init__(context, request, view, manager)
 
     render = ViewPageTemplateFile( "templates/buttons.pt" )
 
