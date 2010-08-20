@@ -11,7 +11,7 @@ dexterity.draftspreviewbehavior.egg-info/not-zip-safe
 dexterity.draftspreviewbehavior.egg-info/requires.txt
 dexterity.draftspreviewbehavior.egg-info/top_level.txt
 dexterity/draftspreviewbehavior/__init__.py
-dexterity/draftspreviewbehavior/buttons.py
+dexterity/draftspreviewbehavior/buttonoverrides.py
 dexterity/draftspreviewbehavior/configure.zcml
 dexterity/draftspreviewbehavior/draftform.py
 dexterity/draftspreviewbehavior/interfaces.py

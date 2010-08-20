@@ -7,7 +7,7 @@ import zope.event
 import zope.schema.interfaces
 import zope.lifecycleevent
 
-from plone.z3cform.buttons import ButtonAndHandler
+from plone.z3cform.buttonoverrides import ButtonAndHandler
 
 from plone.dexterity.i18n import MessageFactory as _
 from plone.dexterity.interfaces import IDexterityFTI

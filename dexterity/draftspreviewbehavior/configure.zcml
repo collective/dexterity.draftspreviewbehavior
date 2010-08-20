@@ -42,15 +42,15 @@
         <!-- Draft DefaultAddForm button & handler overrides -->
         <subscriber
         for="plone.dexterity.browser.add.DefaultAddForm
-             plone.z3cform.buttons.IButtonOverrideEvent"
-        handler=".buttons.AddPreviewDraftButtonAndHandler"
+             plone.z3cform.buttonoverrides.IButtonOverrideEvent"
+        handler=".buttonoverrides.AddPreviewDraftButtonAndHandler"
         />
         
         <!-- Draft DefaultEditForm button & handler overrides -->
         <subscriber
         for="plone.dexterity.browser.edit.DefaultEditForm
-             plone.z3cform.buttons.IButtonOverrideEvent"
-        handler=".buttons.EditPreviewDraftButtonAndHandler"
+             plone.z3cform.buttonoverrides.IButtonOverrideEvent"
+        handler=".buttonoverrides.EditPreviewDraftButtonAndHandler"
         />
  
     </configure>
