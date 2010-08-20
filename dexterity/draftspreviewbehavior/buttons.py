@@ -22,6 +22,8 @@ from dexterity.draftspreviewbehavior.interfaces import IDraftPreviewBehavior
 class AddPreviewDraftButtonAndHandler(ButtonAndHandler):
     zope.interface.implements( IDraftPreviewBehavior )
     
+    position = 400
+    
     def __init__( self, form, event ):
         super(AddPreviewDraftButtonAndHandler,self).__init__(form,event)
         fti = zope.component.queryUtility( IDexterityFTI, name=form.portal_type )
@@ -47,6 +49,8 @@ class EditPreviewDraftButtonAndHandler(ButtonAndHandler):
     zope.component.adapts( interfaces.IEditForm,
                            zope.interface.Interface,
                            IDraft)
+    
+    position = 400
     
     def __init__( self, form, event ):
         super(EditPreviewDraftButtonAndHandler,self).__init__(form,event)
