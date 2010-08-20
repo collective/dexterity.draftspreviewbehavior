@@ -10,7 +10,6 @@ from zope.traversing.interfaces import TraversalError
 
 from Acquisition import aq_inner
 
-from Products.CMFCore.interfaces import IFolderish
 from Products.statusmessages.interfaces import IStatusMessage
 
 from plone.dexterity.i18n import MessageFactory as _
@@ -21,7 +20,6 @@ from dexterity.draftspreviewbehavior.draftform import DefaultDraftForm
 class DraftTraverser(object):
     """Draft traverser.
     """
-    adapts(IFolderish, Interface)
     implements(ITraversable)
 
     previewMessage = _(u'This is a preview.  Click "Save" to publish, "Edit" to edit or "Cancel" to cancel and delete')

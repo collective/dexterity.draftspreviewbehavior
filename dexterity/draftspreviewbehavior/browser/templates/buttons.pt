@@ -1,5 +1,9 @@
 <div class="visualClear">
     <form action="." method="post" tal:attributes="action view/formURL">
-        <metal:actions metal:use-macro="context/@@ploneform-macros/actions"/>
+        <div class="formControls">
+            <input type="submit" value="Save" class="submit-widget button-field context" name="form.buttons.save" id="form-buttons-save">
+            <input type="submit" value="Edit" class="submit-widget button-field standalone" name="form.buttons.edit" id="form-buttons-edit">
+            <input type="submit" value="Cancel" class="submit-widget button-field standalone" name="form.buttons.cancel" id="form-buttons-cancel">
+        </div>
     </form>
 </div>
