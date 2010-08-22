@@ -22,6 +22,7 @@ dexterity/draftspreviewbehavior/browser/configure.zcml
 dexterity/draftspreviewbehavior/browser/message.py
 dexterity/draftspreviewbehavior/browser/preview.py
 dexterity/draftspreviewbehavior/browser/templates/buttons.pt
+dexterity/draftspreviewbehavior/browser/templates/message.pt
 dexterity/draftspreviewbehavior/profiles/default/viewlets.xml
 docs/HISTORY.txt
 docs/INSTALL.txt
