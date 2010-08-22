@@ -3,6 +3,16 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="dexterity.draftspreviewbehavior">
   
+    <!-- Status Message viewlet -->
+    <browser:viewlet
+        name="preview.message"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+        view="plone.app.layout.globals.interfaces.IViewView"
+        for="dexterity.draftspreviewbehavior.interfaces.IDraftPreview"
+        class=".message.MessageViewlet"
+        permission="cmf.ModifyPortalContent"
+        />
+
     <!-- viewlet for 'preview' action buttons (save/edit/cancel) -->
     <browser:viewlet
         name="preview.buttons"

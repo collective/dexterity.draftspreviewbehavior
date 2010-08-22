@@ -1,0 +1,5 @@
+TODO
+====
+
+- allow dexterity.draftsbreviewbehavior.browser.templates/*.pt to be internationalized
+

@@ -42,7 +42,11 @@ class DraftTraverser(object):
         content.__parent__ = aq_inner( self.context )
         
         self.request['disable_border'] = True
-        IStatusMessage(self.request).addStatusMessage( self.previewMessage, "info")
+        
+        #Using a viewlet to show message since message was showing up after
+        #submitting or canceling a page from preview screen (only sometimes
+        #and usually only the first time a form was submitted (cache prob?)
+        #IStatusMessage(self.request).addStatusMessage( self.previewMessage, "info")
         
         zope.interface.alsoProvides( content, IDraftPreview )
         
