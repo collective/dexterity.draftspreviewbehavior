@@ -35,8 +35,8 @@
         <plone:behavior
             title="IDraftPreviewBehavior"
             description="Marks object as IDraftPreviewBehavior to allow preview of drafts ('Preview' button)"
-            provides=".interfaces.IDraftPreviewBehavior"
-            marker=".interfaces.IDraftPreviewBehavior"
+            provides=".IDraftPreviewBehavior"
+            marker=".IDraftPreviewBehavior"
             />
 
         <!-- Draft DefaultAddForm button & handler overrides -->
