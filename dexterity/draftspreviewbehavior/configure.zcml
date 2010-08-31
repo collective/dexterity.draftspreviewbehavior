@@ -1,16 +1,13 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:five="http://namespaces.zope.org/five"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:plone="http://namespaces.plone.org/plone"
-    xmlns:grok="http://namespaces.zope.org/grok"
     i18n_domain="dexterity.draftspreviewbehavior">
-   
-    <configure 
+
+    <configure
         package="dexterity.draftspreviewbehavior"
         zcml:condition="installed plone.app.drafts">
-        
+
         <!--include package="plone.app.intid" /-->
         <include package=".browser" />
         <include file="profiles.zcml" />
@@ -29,7 +26,7 @@
                  zope.interface.Interface"
             factory=".traverser.DraftTraverser"
         />
- 
+
         <include package="plone.behavior" file="meta.zcml" />
         <include package="plone.directives.form" file="meta.zcml" />
         <plone:behavior
@@ -42,16 +39,16 @@
         <!-- Draft DefaultAddForm button & handler overrides -->
         <subscriber
         for="plone.dexterity.browser.add.DefaultAddForm
-             plone.z3cform.buttonoverrides.IButtonOverrideEvent"
-        handler=".buttonoverrides.AddPreviewDraftButtonAndHandler"
+             plone.z3cform.interfaces.IButtonOverrideEvent"
+        handler=".buttonoverrides.AddPreviewDraftButtonAndHandlerSubscriber"
         />
-        
+
         <!-- Draft DefaultEditForm button & handler overrides -->
         <subscriber
         for="plone.dexterity.browser.edit.DefaultEditForm
-             plone.z3cform.buttonoverrides.IButtonOverrideEvent"
-        handler=".buttonoverrides.EditPreviewDraftButtonAndHandler"
+             plone.z3cform.interfaces.IButtonOverrideEvent"
+        handler=".buttonoverrides.EditPreviewDraftButtonAndHandlerSubscriber"
         />
- 
+
     </configure>
 </configure>

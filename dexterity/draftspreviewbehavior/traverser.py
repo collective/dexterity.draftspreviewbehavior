@@ -3,19 +3,16 @@
 
 import zope.component
 from zope.interface import implements
-from zope.interface import Interface
-from zope.component import adapts
 from zope.traversing.interfaces import ITraversable
 from zope.traversing.interfaces import TraversalError
 
 from Acquisition import aq_inner
 
-from Products.statusmessages.interfaces import IStatusMessage
-
 from plone.dexterity.i18n import MessageFactory as _
 
 from dexterity.draftspreviewbehavior.interfaces import IDraftPreview
 from dexterity.draftspreviewbehavior.draftform import DefaultDraftForm
+
 
 class DraftTraverser(object):
     """Draft traverser.
@@ -23,33 +20,25 @@ class DraftTraverser(object):
     implements(ITraversable)
 
     previewMessage = _(u'This is a preview.  Click "Save" to publish, "Edit" to edit or "Cancel" to cancel and delete')
-    
+
     def __init__(self, context, request):
         self.context = context
         self.request = request
 
-    def traverse(self, name, ignored):       
-        form = DefaultDraftForm( self.context, self.request )
+    def traverse(self, name, ignored):
+        form = DefaultDraftForm(self.context, self.request)
         form.portal_type = name
-        form.update() #Should automatically get draft data via notify
-        
+        form.update()  # Should automatically get draft data via notify
+
         content = form.populateContextFromDraft()
-        
+
         if content is None:
             raise TraversalError(self.context, name)
-        
-        content.id = '++draft++%s' % form.portal_type
-        content.__parent__ = aq_inner( self.context )
-        
-        self.request['disable_border'] = True
-        
-        #Using a viewlet to show message since message was showing up after
-        #submitting or canceling a page from preview screen (only sometimes
-        #and usually only the first time a form was submitted (cache prob?)
-        #IStatusMessage(self.request).addStatusMessage( self.previewMessage, "info")
-        
-        zope.interface.alsoProvides( content, IDraftPreview )
-        
-        return content
 
-        #raise TraversalError(self.context, name)
+        content.id = '++draft++%s' % form.portal_type
+        content.__parent__ = aq_inner(self.context)
+
+        self.request['disable_border'] = True
+        zope.interface.alsoProvides(content, IDraftPreview)
+
+        return content

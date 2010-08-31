@@ -7,29 +7,31 @@ import zope.event
 import zope.schema.interfaces
 import zope.lifecycleevent
 
-from plone.z3cform.buttonoverrides import ButtonAndHandler
+from plone.z3cform.buttonoverrides import ButtonAndHandlerSubscriber
 
 from plone.dexterity.i18n import MessageFactory as _
 from plone.dexterity.interfaces import IDexterityFTI
 
-import z3c.form.form
-from z3c.form import button, interfaces
-
-from plone.app.drafts.interfaces import IDraft
+from z3c.form import button
 
 from dexterity.draftspreviewbehavior.interfaces import IDraftPreviewBehavior
 
-class AddPreviewDraftButtonAndHandler(ButtonAndHandler):
-    zope.interface.implements( IDraftPreviewBehavior )
-    
+
+class AddPreviewDraftButtonAndHandlerSubscriber(ButtonAndHandlerSubscriber):
+    """Add custom 'Preview' button in DefaultAddForm to allow drafts
+    to function properly only if the content type supports
+    plone.app.drafts.IDraftable
+    """
+    zope.interface.implements(IDraftPreviewBehavior)
+
     position = 400
-    
-    def __init__( self, form, event ):
-        super(AddPreviewDraftButtonAndHandler,self).__init__(form,event)
-        fti = zope.component.queryUtility( IDexterityFTI, name=form.portal_type )
+
+    def __init__(self, form, event):
+        super(AddPreviewDraftButtonAndHandlerSubscriber, self).__init__(form, event)
+        fti = zope.component.queryUtility(IDexterityFTI, name=form.portal_type)
         if 'dexterity.draftspreviewbehavior.IDraftPreviewBehavior' in fti.behaviors:
-            form.buttonsandhandlers[ IDraftPreviewBehavior ] = self
- 
+            form.buttonsandhandlers[IDraftPreviewBehavior] = self
+
     @button.buttonAndHandler(_(u'Preview'), name='preview')
     def buttonHandler(self, action):
         data, errors = self.extractData()
@@ -38,26 +40,28 @@ class AddPreviewDraftButtonAndHandler(ButtonAndHandler):
             return
 
         view = '++draft++%s' % self.portal_type
-        redirect_url = "%s/%s" % ( self.getContent().absolute_url(), view )
-        self.request.response.redirect( redirect_url ) 
+        redirectURL = "%s/%s" % (self.getContent().absolute_url(), view)
+        self.request.response.redirect(redirectURL)
 
     def updateActions(self):
         self.form.actions["preview"].addClass("standalone")
-    
-class EditPreviewDraftButtonAndHandler(ButtonAndHandler):
-    zope.interface.implements( IDraftPreviewBehavior )
-    zope.component.adapts( interfaces.IEditForm,
-                           zope.interface.Interface,
-                           IDraft)
-    
+
+
+class EditPreviewDraftButtonAndHandlerSubscriber(ButtonAndHandlerSubscriber):
+    """Add custom 'Preview' button in DefaultEditForm to allow drafts
+    to function properly only if the content type supports
+    plone.app.drafts.IDraftable
+    """
+    zope.interface.implements(IDraftPreviewBehavior)
+
     position = 400
-    
-    def __init__( self, form, event ):
-        super(EditPreviewDraftButtonAndHandler,self).__init__(form,event)
-        fti = zope.component.queryUtility( IDexterityFTI, name=form.portal_type )
+
+    def __init__(self, form, event):
+        super(EditPreviewDraftButtonAndHandlerSubscriber, self).__init__(form, event)
+        fti = zope.component.queryUtility(IDexterityFTI, name=form.portal_type)
         if 'dexterity.draftspreviewbehavior.IDraftPreviewBehavior' in fti.behaviors:
-            form.buttonsandhandlers[ IDraftPreviewBehavior ] = self
- 
+            form.buttonsandhandlers[IDraftPreviewBehavior] = self
+
     @button.buttonAndHandler(_(u'Preview'), name='preview')
     def buttonHandler(self, action):
         data, errors = self.extractData()
@@ -66,9 +70,8 @@ class EditPreviewDraftButtonAndHandler(ButtonAndHandler):
             return
 
         view = '++draft++%s' % self.portal_type
-        redirect_url = "%s/%s" % ( self.getContent().absolute_url(), view )
-        self.request.response.redirect( redirect_url ) 
-        
+        redirectURL = "%s/%s" % (self.getContent().absolute_url(), view)
+        self.request.response.redirect(redirectURL)
+
     def updateActions(self):
         self.form.actions["preview"].addClass("standalone")
-    

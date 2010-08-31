@@ -9,28 +9,32 @@ from plone.app.dexterity.behaviors.drafts import addBegun
 
 from z3c.form.form import Form, applyChanges
 
+
 class DefaultDraftForm(DexterityExtensibleForm, Form):
     """ DefaultDraftForm is used by draft traverser to populate
     the request.form and populate the temporary (not saved in ZODB) content
     object
     """
- 
+
     ignoreContext = True
     ignoreRequest = False
-    
+
     def update(self):
-        addBegun( self, None )
+        addBegun(self, None)
         super(DefaultDraftForm, self).update()
 
     def populateContextFromDraft(self):
+        """Will populate the temporary content object from values contained
+        within the draft
+        """
         data, errors = self.extractData()
         if errors:
             return None
-        
+
         fti = zope.component.getUtility(IDexterityFTI, name=self.portal_type)
         container = aq_inner(self.context)
         content = zope.component.createObject(fti.factory)
-        
+
         if hasattr(content, '_setPortalTypeName'):
             content._setPortalTypeName(fti.getId())
 
@@ -42,5 +46,5 @@ class DefaultDraftForm(DexterityExtensibleForm, Form):
         applyChanges(self, content, data)
         for group in self.groups:
             applyChanges(group, content, data)
-                    
+
         return aq_base(content)
