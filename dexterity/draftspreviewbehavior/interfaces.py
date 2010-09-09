@@ -1,7 +1,7 @@
 import zope.interface
 import zope.schema
 
-from plone.z3cform.interfaces import IButtonAndHandlerSubscriber
+from plone.z3cformbuttonoverrides.interfaces import IButtonAndHandlerSubscriber
 
 """Custom Behavior Button Marker Interfaces
 """

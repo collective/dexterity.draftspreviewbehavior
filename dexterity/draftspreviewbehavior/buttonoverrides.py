@@ -7,7 +7,7 @@ import zope.event
 import zope.schema.interfaces
 import zope.lifecycleevent
 
-from plone.z3cform.buttonoverrides import ButtonAndHandlerSubscriber
+from plone.z3cformbuttonoverrides.buttonoverrides import ButtonAndHandlerSubscriber
 
 from plone.dexterity.i18n import MessageFactory as _
 from plone.dexterity.interfaces import IDexterityFTI
@@ -29,7 +29,7 @@ class AddPreviewDraftButtonAndHandlerSubscriber(ButtonAndHandlerSubscriber):
     def __init__(self, form, event):
         super(AddPreviewDraftButtonAndHandlerSubscriber, self).__init__(form, event)
         fti = zope.component.queryUtility(IDexterityFTI, name=form.portal_type)
-        if 'dexterity.draftspreviewbehavior.IDraftPreviewBehavior' in fti.behaviors:
+        if 'dexterity.draftspreviewbehavior.interfaces.IDraftPreviewBehavior' in fti.behaviors:
             form.buttonsandhandlers[IDraftPreviewBehavior] = self
 
     @button.buttonAndHandler(_(u'Preview'), name='preview')
@@ -59,7 +59,7 @@ class EditPreviewDraftButtonAndHandlerSubscriber(ButtonAndHandlerSubscriber):
     def __init__(self, form, event):
         super(EditPreviewDraftButtonAndHandlerSubscriber, self).__init__(form, event)
         fti = zope.component.queryUtility(IDexterityFTI, name=form.portal_type)
-        if 'dexterity.draftspreviewbehavior.IDraftPreviewBehavior' in fti.behaviors:
+        if 'dexterity.draftspreviewbehavior.interfaces.IDraftPreviewBehavior' in fti.behaviors:
             form.buttonsandhandlers[IDraftPreviewBehavior] = self
 
     @button.buttonAndHandler(_(u'Preview'), name='preview')

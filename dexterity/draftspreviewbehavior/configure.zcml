@@ -32,21 +32,21 @@
         <plone:behavior
             title="IDraftPreviewBehavior"
             description="Marks object as IDraftPreviewBehavior to allow preview of drafts ('Preview' button)"
-            provides=".IDraftPreviewBehavior"
-            marker=".IDraftPreviewBehavior"
+            provides=".interfaces.IDraftPreviewBehavior"
+            marker=".interfaces.IDraftPreviewBehavior"
             />
 
         <!-- Draft DefaultAddForm button & handler overrides -->
         <subscriber
         for="plone.dexterity.browser.add.DefaultAddForm
-             plone.z3cform.interfaces.IButtonOverrideEvent"
+             plone.z3cformbuttonoverrides.interfaces.IButtonOverrideEvent"
         handler=".buttonoverrides.AddPreviewDraftButtonAndHandlerSubscriber"
         />
 
         <!-- Draft DefaultEditForm button & handler overrides -->
         <subscriber
         for="plone.dexterity.browser.edit.DefaultEditForm
-             plone.z3cform.interfaces.IButtonOverrideEvent"
+             plone.z3cformbuttonoverrides.interfaces.IButtonOverrideEvent"
         handler=".buttonoverrides.EditPreviewDraftButtonAndHandlerSubscriber"
         />
 

@@ -1,1 +1,0 @@
-from dexterity.draftspreviewbehavior.interfaces import IDraftPreviewBehavior
