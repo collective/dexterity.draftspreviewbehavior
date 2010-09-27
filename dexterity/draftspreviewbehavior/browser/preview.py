@@ -10,7 +10,7 @@ from Acquisition import aq_parent, aq_inner
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from plone.dexterity.interfaces import IAddBegunEvent, IEditBegunEvent
+#from plone.dexterity.interfaces import IAddBegunEvent, IEditBegunEvent
 
 
 class PreviewViewButtons(BrowserView):
@@ -35,10 +35,11 @@ class PreviewViewButtons(BrowserView):
         content = aq_inner(self.context)
         container = aq_parent(aq_inner(content))
 
-        if IAddBegunEvent.providedBy(self.request):
+        formType = self.request['DRAFT']._form_type
+        if formType == 'add':
             view = '++add++%s' % content.portal_type
             url = '%s/%s' % (container.absolute_url_path(), view)
-        elif IEditBegunEvent.providedBy(self.request):
+        elif formType == 'edit':
             view = 'edit'
             url = '%s/%s' % (container.absolute_url_path(), view)
         else:

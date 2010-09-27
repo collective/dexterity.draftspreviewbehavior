@@ -5,7 +5,7 @@ from Acquisition.interfaces import IAcquirer
 
 from plone.dexterity.interfaces import IDexterityFTI
 from plone.dexterity.browser.base import DexterityExtensibleForm
-from plone.app.dexterity.behaviors.drafts import addBegun
+#from plone.app.dexterity.behaviors.drafts import begunUpdate
 
 from z3c.form.form import Form, applyChanges
 
@@ -20,7 +20,7 @@ class DefaultDraftForm(DexterityExtensibleForm, Form):
     ignoreRequest = False
 
     def update(self):
-        addBegun(self, None)
+        #begunUpdate(self, None)
         super(DefaultDraftForm, self).update()
 
     def populateContextFromDraft(self):
